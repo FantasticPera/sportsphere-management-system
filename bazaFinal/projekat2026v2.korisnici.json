@@ -1,0 +1,98 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e10001"
+  },
+  "kor_ime": "admin",
+  "lozinka": "3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121",
+  "ime": "Marko",
+  "prezime": "Marković",
+  "telefon": "0601234567",
+  "profilna": "default.png",
+  "omiljeni_sportovi": [],
+  "mejl": "admin@sportsphere.rs",
+  "tip": "admin",
+  "maticni_broj": "",
+  "status": "odobren",
+  "kazne": [],
+  "reset_token": "",
+  "reset_token_istice": null
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e10002"
+  },
+  "kor_ime": "radnik_olimp",
+  "lozinka": "e69c2b92571cca880d5ebd1fe8f2d4231725a4e24baddc5cc665efaa5adc79d6",
+  "ime": "Jovan",
+  "prezime": "Jovanović",
+  "telefon": "0611234567",
+  "profilna": "jovan.png",
+  "omiljeni_sportovi": [],
+  "mejl": "jovan@olimp.rs",
+  "tip": "radnik",
+  "maticni_broj": "12345678",
+  "status": "odobren",
+  "kazne": [],
+  "reset_token": "",
+  "reset_token_istice": null
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "kor_ime": "sportista1",
+  "lozinka": "46aa8d9ce923dd8524450e7fd855a4f710f953bf5e7d0afdbd17511e69bf97cf",
+  "ime": "Nikola",
+  "prezime": "Nikolić",
+  "telefon": "0621234567",
+  "profilna": "1785037392289-82470b4ed44c3edacfcd4201e2297050.jpg",
+  "omiljeni_sportovi": [
+    "Fudbal",
+    "Košarka"
+  ],
+  "mejl": "nikola@gmail.com",
+  "tip": "sportista",
+  "maticni_broj": "",
+  "status": "odobren",
+  "kazne": [],
+  "reset_token": "",
+  "reset_token_istice": null
+},
+{
+  "_id": {
+    "$oid": "6a6558f5c21b31b6e8eb5233"
+  },
+  "kor_ime": "pera123",
+  "lozinka": "127431786f11361fdbab136e5f846d75782f1c54f416528552e14ed5964a9256",
+  "ime": "Perica",
+  "prezime": "Peric",
+  "telefon": "123583295",
+  "omiljeni_sportovi": [
+    "Fudbal"
+  ],
+  "mejl": "perica@gmail.com",
+  "tip": "sportista",
+  "kazne": [],
+  "profilna": "1785026805787-82470b4ed44c3edacfcd4201e2297050.jpg",
+  "status": "obrisan",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a65aa3851122efdfdc43fbf"
+  },
+  "kor_ime": "sportista2",
+  "lozinka": "e067c2d308d27e8d6f36409ea027a65d94d0362cd84ff158aaea3b4a030e538b",
+  "ime": "Mitar",
+  "prezime": "Miric",
+  "telefon": "1241535",
+  "omiljeni_sportovi": [
+    "Košarka"
+  ],
+  "mejl": "oainfoainf",
+  "tip": "sportista",
+  "kazne": [],
+  "profilna": "1785047608300-avatar.png",
+  "status": "odobren",
+  "__v": 0
+}]

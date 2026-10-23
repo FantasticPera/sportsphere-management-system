@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e90001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idRez": {
+    "$oid": "60d5ec49f1b2c8a1b4e60001"
+  },
+  "broj_nedostajucih_igraca": 1,
+  "status": "aktivan"
+},
+{
+  "_id": {
+    "$oid": "6a65a99d51122efdfdc43f9c"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idRez": {
+    "$oid": "6a65a4acb237ea56c38526d3"
+  },
+  "broj_nedostajucih_igraca": 0,
+  "status": "neaktivan",
+  "__v": 0
+}]

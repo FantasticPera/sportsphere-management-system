@@ -1,0 +1,117 @@
+<div *ngIf="objekat" style="max-width: 800px; margin: 40px auto; font-family: Arial, sans-serif;">
+  <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px;">
+    <button *ngIf="loggedUser && loggedUser.tip === 'sportista'" routerLink="/korpa" style="padding: 10px 20px; font-weight: bold;">🛒 Moja Korpa</button>
+  </div>
+
+  <h2>{{ objekat.naziv }}</h2>
+  
+  <ng-container *ngIf="!loggedUser || loggedUser.tip !== 'sportista'">
+    <p><strong>Grad:</strong> {{ objekat.mesto }}</p>
+    <p><strong>Adresa:</strong> {{ objekat.adresa }}</p>
+    <p><strong>Broj svidjanja:</strong> {{ objekat.lajkovi?.length || 0 }}</p>
+    <p><strong>Broj nesvidjanja:</strong> {{ objekat.dislajkovi?.length || 0 }}</p>
+  </ng-container>
+  
+  <div *ngIf="loggedUser && loggedUser.tip === 'sportista' && objekat.opis" style="margin-top: 20px;">
+    <strong>Opis objekta:</strong>
+    <p style="white-space: pre-wrap;">{{ objekat.opis }}</p>
+  </div>
+
+  <hr>
+
+  <h3 *ngIf="!loggedUser || loggedUser.tip !== 'sportista'">Dostupni tereni/hale i cenovnik</h3>
+  <h3 *ngIf="loggedUser && loggedUser.tip === 'sportista'">Galerije terena</h3>
+  <ul>
+    <li *ngFor="let t of objekat.tereni" style="margin-bottom: 20px;">
+      
+      <ng-container *ngIf="!loggedUser || loggedUser.tip !== 'sportista'">
+        <strong>{{ t.naziv }}</strong> (Tip: {{ t.tip_terena }}) <br>
+        Cenovnik: {{ t.cena }} RSD / sat
+      </ng-container>
+
+      <strong *ngIf="loggedUser && loggedUser.tip === 'sportista'">{{ t.naziv }}</strong>
+
+      <div *ngIf="t.galerija_slika && t.galerija_slika.length > 0" style="margin-top: 10px;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;">
+          <img *ngFor="let slika of t.galerija_slika" 
+               [src]="'http://localhost:4000/uploads/' + slika" 
+               alt="Slika terena" 
+               style="width: 150px; height: 100px; object-fit: cover; border-radius: 5px; border: 1px solid #ccc;"
+               onerror="this.src='/placeholder.jpg'">
+        </div>
+      </div>
+      
+    </li>
+  </ul>
+  <p *ngIf="!objekat.tereni || objekat.tereni.length === 0">Trenutno nema unetih terena.</p>
+
+  <!-- Prikaz kalendara samo za ulogovanog sportistu -->
+  <app-kalendar *ngIf="loggedUser && loggedUser.tip === 'sportista'" [objekat]="objekat"></app-kalendar>
+
+  <!-- Forma za rezervaciju za sportistu -->
+  <div *ngIf="loggedUser && loggedUser.tip === 'sportista'" style="margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; max-width: 400px;">
+    <h4>Nova rezervacija</h4>
+    
+    <div style="margin-bottom: 15px;">
+      <label>Odaberi teren: </label>
+      <select [(ngModel)]="rezTerenId" style="padding: 5px; width: 100%;">
+        <option *ngFor="let t of objekat.tereni" [value]="t._id">{{ t.naziv }}</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Datum: </label>
+      <input type="date" [(ngModel)]="rezDatum" style="padding: 5px; width: 100%;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Vreme Od: </label>
+      <select [(ngModel)]="rezOd" style="padding: 5px; width: 100%;">
+        <option *ngFor="let s of satiOd" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Vreme Do: </label>
+      <select [(ngModel)]="rezDo" style="padding: 5px; width: 100%;">
+        <option *ngFor="let s of satiDo" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <button type="button" (click)="rezervisi()" style="padding: 8px 15px; cursor: pointer;">Rezervisi</button>
+  </div>
+
+  <div *ngIf="poruka" style="margin-top: 20px; font-weight: bold; color: blue;">
+    {{ poruka }}
+  </div>
+
+  <hr>
+  
+  <div *ngIf="loggedUser && loggedUser.tip === 'sportista' && opremaSva.length > 0">
+    <h2>Prodavnica opreme</h2>
+    <div style="margin-bottom: 20px;">
+      <label>Filtriraj po sportu: </label>
+      <select [(ngModel)]="odabraniSport" (change)="filtrirajOpremu()">
+        <option value="">Svi sportovi</option>
+        <option *ngFor="let s of sportovi" [value]="s.vrsta">{{ s.vrsta }}</option>
+      </select>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+      <div *ngFor="let op of opremaPrikaz" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 250px; text-align: center;">
+        <img [src]="op.slika ? 'http://localhost:4000/uploads/' + op.slika : '/placeholder.jpg'" alt="{{ op.naziv }}" style="width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px;">
+        <h4 style="margin: 0 0 10px 0;">{{ op.naziv }}</h4>
+        <p style="margin: 0 0 5px 0; color: #555;">Sport: {{ op.vrsta_sporta }}</p>
+        <p style="margin: 0 0 5px 0; font-weight: bold;">Cena: {{ op.cena }} RSD</p>
+        <p style="margin: 0 0 15px 0; font-size: 0.9em; color: green;">Zalihe: {{ op.zalihe }}</p>
+        
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+          <input type="number" [(ngModel)]="op.trazenaKolicina" min="1" [max]="op.zalihe" style="width: 60px; padding: 5px;" [disabled]="op.zalihe === 0">
+          <button (click)="dodajUKorpu(op)" [disabled]="op.zalihe === 0" style="padding: 5px 10px; cursor: pointer;">Dodaj u korpu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="!objekat" style="text-align: center; margin-top: 50px;">Ucitavanje...</div>

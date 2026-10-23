@@ -1,0 +1,32 @@
+<div>
+
+  <h2>Generisanje izvestaja (PDF)</h2>
+
+  <div style="margin-bottom: 20px;">
+    <label>Izaberite objekat (prodavnicu):</label><br>
+    <select [(ngModel)]="izabraniObjekat" style="width: 300px; padding: 5px;">
+      <option [ngValue]="null">-- Izaberi objekat --</option>
+      <option *ngFor="let o of mojiObjekti" [ngValue]="o">{{ o.naziv }} ({{ o.mesto }})</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+    <div>
+      <label>Mesec:</label><br>
+      <select [(ngModel)]="mesec" style="padding: 5px; width: 145px;">
+        <option *ngFor="let m of meseci" [ngValue]="m.val">{{ m.naziv }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Godina:</label><br>
+      <select [(ngModel)]="godina" style="padding: 5px; width: 145px;">
+        <option *ngFor="let g of godine" [ngValue]="g">{{ g }}</option>
+      </select>
+    </div>
+  </div>
+
+  <button style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; font-size: 16px;"
+          (click)="generisiPDF()">
+    Generisi izvestaj (PDF)
+  </button>
+</div>

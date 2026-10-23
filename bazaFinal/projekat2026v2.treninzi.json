@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4eb0001"
+  },
+  "idTrener": {
+    "$oid": "60d5ec49f1b2c8a1b4e70001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "datum": "2026-07-29",
+  "od": "09:00",
+  "do": "10:00",
+  "status": "prihvacen"
+},
+{
+  "_id": {
+    "$oid": "6a65b70ce4e1d55372842d4d"
+  },
+  "idTrener": {
+    "$oid": "60d5ec49f1b2c8a1b4e70001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "datum": "2026-07-26",
+  "od": "14:00",
+  "do": "15:00",
+  "status": "zakazan",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a65da1ac80b3f7b21825863"
+  },
+  "idTrener": {
+    "$oid": "60d5ec49f1b2c8a1b4e70001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "datum": "2026-10-10",
+  "od": "12:00",
+  "do": "14:00",
+  "status": "zakazan",
+  "__v": 0
+}]

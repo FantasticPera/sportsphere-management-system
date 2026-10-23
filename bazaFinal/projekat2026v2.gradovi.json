@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e30001"
+  },
+  "naziv": "Beograd"
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e30002"
+  },
+  "naziv": "Novi Sad"
+}]

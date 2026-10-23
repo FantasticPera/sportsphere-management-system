@@ -1,0 +1,154 @@
+<div>
+
+  <h2>Upravljanje opremom i promocijama</h2>
+
+  <div style="margin-bottom: 20px;">
+    <label>Izaberite objekat (prodavnicu):</label><br>
+    <select [(ngModel)]="izabraniObjekat" (change)="onObjekatChange()" style="width: 300px; padding: 5px;">
+      <option [ngValue]="null">-- Izaberi objekat --</option>
+      <option *ngFor="let o of mojiObjekti" [ngValue]="o">{{ o.naziv }} ({{ o.mesto }})</option>
+    </select>
+  </div>
+
+  <div *ngIf="izabraniObjekat">
+    <!-- TABS -->
+    <div style="margin-bottom: 15px;">
+      <button [ngStyle]="{'background-color': aktivniTab === 'oprema' ? '#007bff' : '#ccc', 'color': 'white', 'padding': '10px'}" 
+              (click)="aktivniTab = 'oprema'">Katalog opreme</button>
+      <button [ngStyle]="{'background-color': aktivniTab === 'promocije' ? '#007bff' : '#ccc', 'color': 'white', 'padding': '10px'}" 
+              (click)="aktivniTab = 'promocije'">Promocije</button>
+    </div>
+
+    <!-- OPREMA -->
+    <div *ngIf="aktivniTab === 'oprema'">
+      <h3>Dodaj novu opremu</h3>
+      <div *ngIf="porukaOprema" style="color: blue; margin-bottom: 10px;">{{ porukaOprema }}</div>
+      
+      <div>
+        <label>Naziv opreme:</label><br>
+        <input type="text" [(ngModel)]="novaOprema.naziv">
+      </div>
+      <div>
+        <label>Cena:</label><br>
+        <input type="number" [(ngModel)]="novaOprema.cena">
+      </div>
+      <div>
+        <label>Zalihe (kolicina):</label><br>
+        <input type="number" [(ngModel)]="novaOprema.zalihe">
+      </div>
+      <div>
+        <label>Vrsta sporta:</label><br>
+        <input type="text" [(ngModel)]="novaOprema.vrsta_sporta">
+      </div>
+      <div>
+        <label>Slika (opciono):</label><br>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)">
+      </div>
+      <button (click)="dodajOpremu()" style="margin-top: 10px;">Dodaj opremu</button>
+
+      <hr>
+
+      <h3>Katalog opreme za objekat {{ izabraniObjekat.naziv }}</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left;">
+        <thead>
+          <tr style="background-color: #f0f0f0;">
+            <th>Slika</th>
+            <th>Naziv</th>
+            <th>Vrsta sporta</th>
+            <th>Cena</th>
+            <th>Zalihe</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let o of opremaLista">
+            <td>
+              <img *ngIf="o.slika" [src]="o.slika" style="max-height: 50px;">
+              <span *ngIf="!o.slika">Nema slike</span>
+            </td>
+            <td>{{ o.naziv }}</td>
+            <td>{{ o.vrsta_sporta }}</td>
+            <td>
+              <input type="number" [(ngModel)]="o.cena" style="width: 70px;">
+            </td>
+            <td>
+              <input type="number" [(ngModel)]="o.zalihe" style="width: 70px;">
+            </td>
+            <td>
+              <button (click)="azurirajOpremu(o)">Azuriraj</button>
+            </td>
+          </tr>
+          <tr *ngIf="opremaLista.length === 0">
+            <td colspan="6" style="text-align: center;">Nema opreme u katalogu.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PROMOCIJE -->
+    <div *ngIf="aktivniTab === 'promocije'">
+      <h3>Dodaj novu promociju</h3>
+      <div *ngIf="porukaPromocija" style="color: blue; margin-bottom: 10px;">{{ porukaPromocija }}</div>
+      
+      <div>
+        <label>Naziv promocije:</label><br>
+        <input type="text" [(ngModel)]="novaPromocija.naziv">
+      </div>
+      <div>
+        <label>Period vazenja OD (YYYY-MM-DD):</label><br>
+        <input type="date" [(ngModel)]="novaPromocija.period_vazenja_od">
+      </div>
+      <div>
+        <label>Period vazenja DO (YYYY-MM-DD):</label><br>
+        <input type="date" [(ngModel)]="novaPromocija.period_vazenja_do">
+      </div>
+      <div>
+        <label>Vrsta sporta (opciono):</label><br>
+        <input type="text" [(ngModel)]="novaPromocija.vrsta_sporta">
+      </div>
+      <div>
+        <label>Procenat popusta (%):</label><br>
+        <input type="number" [(ngModel)]="novaPromocija.procenat">
+      </div>
+      <div>
+        <label>Fiksni popust (RSD):</label><br>
+        <input type="number" [(ngModel)]="novaPromocija.fiksni_popust">
+      </div>
+      <button (click)="dodajPromociju()" style="margin-top: 10px;">Dodaj promociju</button>
+
+      <hr>
+
+      <h3>Trenutne promocije</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left;">
+        <thead>
+          <tr style="background-color: #f0f0f0;">
+            <th>Naziv</th>
+            <th>Period OD</th>
+            <th>Period DO</th>
+            <th>Vrsta sporta</th>
+            <th>Popust (%)</th>
+            <th>Fiksni popust</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of izabraniObjekat.promocije">
+            <td><input type="text" [(ngModel)]="p.naziv" style="width: 100px;"></td>
+            <td><input type="date" [(ngModel)]="p.period_vazenja_od"></td>
+            <td><input type="date" [(ngModel)]="p.period_vazenja_do"></td>
+            <td><input type="text" [(ngModel)]="p.vrsta_sporta" style="width: 80px;"></td>
+            <td><input type="number" [(ngModel)]="p.procenat" style="width: 60px;"></td>
+            <td><input type="number" [(ngModel)]="p.fiksni_popust" style="width: 60px;"></td>
+            <td>
+              <button (click)="azurirajPromociju(p)">Azuriraj</button>
+            </td>
+          </tr>
+          <tr *ngIf="!izabraniObjekat.promocije || izabraniObjekat.promocije.length === 0">
+            <td colspan="7" style="text-align: center;">Nema aktivnih promocija.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

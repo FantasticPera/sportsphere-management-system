@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Angular / Frontend build
+.angular/
+dist/
+build/
+
+# Environment i tajne (lozinke za baze, JWT tajne)
+.env
+*.env
+
+# Logovi i cache
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE podešavanja
+.vscode/
+.idea/

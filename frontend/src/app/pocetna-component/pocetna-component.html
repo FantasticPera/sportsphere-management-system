@@ -1,0 +1,282 @@
+<div style="max-width: 900px; margin: 40px auto; font-family: Arial, sans-serif;">
+
+  <h1 style="color: #333;">Sportsphere Hub</h1>
+
+  <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;" *ngIf="!loggedUser || loggedUser.tip !== 'admin'">
+    <strong>Ukupan broj aktivnih objekata:</strong> {{ ukupanBrojAktivnih }}
+  </div>
+
+  <div style="margin-bottom: 30px;" *ngIf="!loggedUser || loggedUser.tip !== 'admin'">
+    <h3 style="color: #444;">Top 3 najbolje ocenjena objekta:</h3>
+    <ul style="list-style-type: none; padding-left: 0;">
+      <li *ngFor="let o of top3Objekti; let i = index" style="margin-bottom: 8px;">
+        <strong>{{ i+1 }}. {{ o.naziv }}</strong>
+      </li>
+    </ul>
+    <p *ngIf="top3Objekti.length === 0" style="color: #666;">Trenutno nema ocenjenih objekata.</p>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <ng-container *ngIf="loggedUser && loggedUser.tip === 'admin'">
+    <div style="border: 2px solid #dc3545; padding: 20px; border-radius: 8px; margin-bottom: 40px; background-color: #fff8f8;">
+      <h2 style="color: #dc3545; text-align: center;">Administratorski Panel</h2>
+      
+      <!-- Zahtevi za registraciju -->
+      <h3>1. Zahtevi za registraciju na cekanju</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; margin-bottom: 20px; background-color: white;">
+        <thead><tr style="background-color: #f0f0f0;"><th>Korisnicko ime</th><th>Ime i Prezime</th><th>Tip</th><th>Akcije</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let k of korisniciNaCekanju">
+            <td>{{ k.kor_ime }}</td>
+            <td>{{ k.ime }} {{ k.prezime }}</td>
+            <td>{{ k.tip }}</td>
+            <td>
+              <button style="background-color: #28a745; color: white; margin-right: 5px; padding: 5px;" (click)="odobriKorisnika(k, 'aktivan')">Odobri</button>
+              <button style="background-color: #dc3545; color: white; padding: 5px;" (click)="odobriKorisnika(k, 'odbijen')">Odbij</button>
+            </td>
+          </tr>
+          <tr *ngIf="korisniciNaCekanju.length === 0"><td colspan="4" style="text-align: center;">Nema zahteva na cekanju.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Objekti na cekanju -->
+      <h3>2. Novi sportski objekti na cekanju</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; margin-bottom: 20px; background-color: white;">
+        <thead><tr style="background-color: #f0f0f0;"><th>Naziv</th><th>Mesto</th><th>PIB</th><th>Akcije</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let o of objektiNaCekanju">
+            <td>{{ o.naziv }}</td>
+            <td>{{ o.mesto }}</td>
+            <td>{{ o.pib }}</td>
+            <td>
+              <button style="background-color: #28a745; color: white; padding: 5px;" (click)="odobriObjekat(o)">Odobri</button>
+            </td>
+          </tr>
+          <tr *ngIf="objektiNaCekanju.length === 0"><td colspan="4" style="text-align: center;">Nema objekata na cekanju.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Svi treneri -->
+      <h3>3. Evidencija trenera</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; margin-bottom: 20px; background-color: white;">
+        <thead><tr style="background-color: #f0f0f0;"><th>Ime</th><th>Specijalizacija</th><th>Cena</th><th>Akcije</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let t of sviTreneri">
+            <td>{{ t.ime }}</td>
+            <td>{{ t.specijalizacija }}</td>
+            <td>{{ t.cena }}</td>
+            <td>
+              <button style="background-color: #dc3545; color: white; padding: 5px;" (click)="deaktivirajTrenera(t)">Deaktiviraj</button>
+            </td>
+          </tr>
+          <tr *ngIf="sviTreneri.length === 0"><td colspan="4" style="text-align: center;">Nema aktivnih trenera.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Dodavanje novog sporta -->
+      <h3>4. Dodavanje novog sporta u sistem</h3>
+      <div style="margin-bottom: 20px;">
+        <input type="text" [(ngModel)]="noviSport" placeholder="Naziv sporta" style="padding: 5px; margin-right: 10px;">
+        <button style="background-color: #007bff; color: white; padding: 5px;" (click)="dodajNoviSport()">Dodaj sport</button>
+      </div>
+
+      <!-- Svi aktivni korisnici -->
+      <h3>5. Upravljanje postojecim nalozima</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; background-color: white;">
+        <thead><tr style="background-color: #f0f0f0;"><th>Korisnicko ime</th><th>Ime</th><th>Tip</th><th>Akcije</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let k of sviAktivniKorisnici">
+            <td>{{ k.kor_ime }}</td>
+            <td>{{ k.ime }}</td>
+            <td>{{ k.tip }}</td>
+            <td>
+              <button style="background-color: #dc3545; color: white; padding: 5px;" (click)="deaktivirajKorisnika(k)">Izbrisi nalog</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+
+
+  <!-- Sekcija sa promocijama - samo za sportistu i posetioca -->
+  <div *ngIf="(!loggedUser) || (loggedUser && loggedUser.tip === 'sportista')" style="margin-bottom: 40px;">
+    <h3 style="color: #444;">Aktuelne promocije:</h3>
+    <table *ngIf="aktuelnePromocije.length > 0" border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; background-color: white;">
+      <thead>
+        <tr style="background-color: #f0f0f0;">
+          <th>Naziv promocije</th>
+          <th>Objekat</th>
+          <th>Period vazenja</th>
+          <th>Popust</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of aktuelnePromocije">
+          <td>{{ p.naziv }}</td>
+          <td>{{ p.naziv_objekta }}</td>
+          <td>{{ p.period_vazenja_od }} do {{ p.period_vazenja_do }}</td>
+          <td>
+            <ng-container *ngIf="p.procenat > 0">{{ p.procenat }}%</ng-container>
+            <ng-container *ngIf="p.fiksni_popust > 0">{{ p.fiksni_popust }} RSD</ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="aktuelnePromocije.length === 0" style="color: #666;">Trenutno nema aktuelnih promocija.</p>
+  </div>
+
+  <ng-container *ngIf="!loggedUser || (loggedUser.tip === 'sportista' || loggedUser.tip === 'posetilac')">
+    <h2>Pretraga objekata</h2>
+    <table border="0" cellpadding="5" style="margin-bottom: 20px;">
+      <tr>
+        <td>Naziv (ili deo naziva):</td>
+        <td><input type="text" [(ngModel)]="searchNaziv"></td>
+      </tr>
+      <tr>
+        <td>Grad(ovi):</td>
+        <td>
+          <select multiple [(ngModel)]="searchGradovi" style="height: 80px; width: 150px;">
+            <option *ngFor="let g of gradoviList" [value]="g">{{ g }}</option>
+          </select>
+          <div style="font-size: 0.8em; color: #555;">(Drzite Ctrl za odabir vise gradova)</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Sport:</td>
+        <td>
+          <select [(ngModel)]="searchSport">
+            <option value="">Svi sportovi</option>
+            <option *ngFor="let s of sportoviList" [value]="s.vrsta">{{ s.vrsta }}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Tip terena (zatvoreni/otvoreni):</td>
+        <td>
+          <select [(ngModel)]="searchTipTerena">
+            <option value="">Svi</option>
+            <option value="otvoreni">Otvoreni</option>
+            <option value="zatvoreni">Zatvoreni</option>
+          </select>
+        </td>
+      </tr>
+      <tr *ngIf="loggedUser && loggedUser.tip === 'sportista'">
+        <td colspan="2">
+          <label style="cursor: pointer;">
+            <input type="checkbox" [(ngModel)]="searchSamoSlobodni"> 
+            Samo slobodni termini danas
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: right;">
+          <button type="button" (click)="pretrazi()">Pretrazi</button>
+        </td>
+      </tr>
+    </table>
+
+    <div *ngIf="hasSearched">
+      <h3 *ngIf="searchResults.length > 0">Rezultati pretrage:</h3>
+      <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%;" *ngIf="searchResults.length > 0">
+        <thead>
+          <tr style="background-color: #f0f0f0;">
+            <th style="color: blue;">
+              Naziv 
+              <span style="cursor: pointer;" (click)="sortData('naziv', 'asc')">↑</span>
+              <span style="cursor: pointer;" (click)="sortData('naziv', 'desc')">↓</span>
+            </th>
+            <th style="color: blue;">
+              Grad 
+              <span style="cursor: pointer;" (click)="sortData('mesto', 'asc')">↑</span>
+              <span style="cursor: pointer;" (click)="sortData('mesto', 'desc')">↓</span>
+            </th>
+            <th style="color: blue;">
+              Vrsta sporta 
+              <span style="cursor: pointer;" (click)="sortData('vrsta_sporta', 'asc')">↑</span>
+              <span style="cursor: pointer;" (click)="sortData('vrsta_sporta', 'desc')">↓</span>
+            </th>
+            <th>Akcija</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of searchResults">
+            <td>{{ r.naziv }}</td>
+            <td>{{ r.mesto }}</td>
+            <td>{{ r.vrsta_sporta ? r.vrsta_sporta.join(', ') : '' }}</td>
+            <td style="text-align: center;">
+              <button type="button" [routerLink]="['/objekat', r._id]">Detalji</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h3 *ngIf="searchResults.length === 0" style="color: red;">
+        Nema rezultata za zadate kriterijume pretrage.
+      </h3>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="loggedUser && loggedUser.tip === 'sportista'">
+    <hr style="margin: 40px 0;">
+    <h2>Pretraga trenera</h2>
+    <table border="0" cellpadding="5">
+      <tr>
+        <td>Sport:</td>
+        <td>
+          <select [(ngModel)]="searchTrenerSport">
+            <option value="">Svi sportovi</option>
+            <option *ngFor="let s of sportoviList" [value]="s.vrsta">{{ s.vrsta }}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Objekat:</td>
+        <td>
+          <select [(ngModel)]="searchTrenerObjekat">
+            <option value="">Svi objekti</option>
+            <option *ngFor="let o of objektiList" [value]="o.naziv">{{ o.naziv }}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: right;">
+          <button type="button" (click)="pretraziTrenere()">Pretrazi trenere</button>
+        </td>
+      </tr>
+    </table>
+
+    <div *ngIf="hasSearchedTreneri" style="margin-top: 20px;">
+      <h3 *ngIf="treneriResults.length > 0">Rezultati pretrage:</h3>
+      <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%;" *ngIf="treneriResults.length > 0">
+        <thead>
+          <tr style="background-color: #f0f0f0;">
+            <th>Ime</th>
+            <th>Specijalizacija (Sport)</th>
+            <th>Objekat</th>
+            <th>Prosecna ocena</th>
+            <th>Cena po satu (RSD)</th>
+            <th>Akcija</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of treneriResults">
+            <td>{{ t.ime }}</td>
+            <td>{{ t.specijalizacija }}</td>
+            <td>{{ t.naziv_objekta }}</td>
+            <td style="text-align: center;">{{ t.prosecna_ocena }}</td>
+            <td style="text-align: center;">{{ t.cena }}</td>
+            <td style="text-align: center;">
+              <button type="button" [routerLink]="['/zakazi-trening', t._id]">Zakazi trening</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 *ngIf="treneriResults.length === 0" style="color: red;">
+        Nema trenera koji odgovaraju Vasoj pretrazi.
+      </h3>
+    </div>
+  </ng-container>
+</div>

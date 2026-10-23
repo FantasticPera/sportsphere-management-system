@@ -1,0 +1,359 @@
+<div style="max-width: 900px; margin: 40px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+
+  <h2>Moj Profil</h2>
+
+  <!-- Profilna slika preview -->
+  <div>
+    <img [src]="avatarPreviewUrl ? avatarPreviewUrl : (user.profilna ? 'http://localhost:4000/uploads/' + user.profilna : '/placeholder.jpg')" 
+         alt="Profilna slika"
+         onerror="this.src='/placeholder.jpg'">
+    <br>
+    
+    <div>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+    <div>
+      <button type="button" (click)="generisiAvatar()">
+        Generisi avatar (DiceBear)
+      </button>
+      <button type="button" *ngIf="generatedBlob && !isFileConfirmed" (click)="sacuvajAvatar()">
+        Sacuvaj kao profilnu sliku
+      </button>
+      <div *ngIf="isFileConfirmed">Nova slika spremna za cuvanje!</div>
+    </div>
+  </div>
+
+  <div *ngIf="message">
+    {{ message }}
+  </div>
+
+  <form (ngSubmit)="azuriraj()">
+    <div>
+      <label>Korisnicko ime (ne moze se menjati):</label><br>
+      <input type="text" [(ngModel)]="user.kor_ime" name="kor_ime" disabled>
+    </div>
+
+    <div>
+      <label>Ime:</label><br>
+      <input type="text" [(ngModel)]="user.ime" name="ime" required>
+    </div>
+
+    <div>
+      <label>Prezime:</label><br>
+      <input type="text" [(ngModel)]="user.prezime" name="prezime" required>
+    </div>
+
+    <div>
+      <label>E-mail adresa:</label><br>
+      <input type="email" [(ngModel)]="user.mejl" name="mejl" required>
+    </div>
+
+    <div>
+      <label>Kontakt telefon:</label><br>
+      <input type="text" [(ngModel)]="user.telefon" name="telefon" required>
+    </div>
+
+    <div>
+      <label>Omiljeni sportovi:</label><br>
+      <div>
+        <label *ngFor="let s of sportoviList">
+          <input type="checkbox" 
+                 [checked]="user.omiljeni_sportovi.includes(s.vrsta)"
+                 (change)="toggleSport(s.vrsta)">
+          {{ s.vrsta }}
+        </label>
+      </div>
+    </div>
+
+    <button type="submit">
+      Sacuvaj izmene
+    </button>
+  </form>
+
+  <hr>
+
+  <!-- Premestena forma za promenu lozinke -->
+  <button (click)="showPasswordForm = !showPasswordForm">
+    Promeni lozinku
+  </button>
+
+  <div *ngIf="showPasswordForm">
+    <h3>Promena lozinke</h3>
+    <div *ngIf="passMessage">{{ passMessage }}</div>
+    <div *ngIf="passSuccess">{{ passSuccess }}</div>
+    <div>
+      <label>Nova lozinka:</label><br>
+      <input type="password" [(ngModel)]="novaLozinka">
+    </div>
+    <div>
+      <label>Potvrdite lozinku:</label><br>
+      <input type="password" [(ngModel)]="potvrdaLozinke">
+    </div>
+    <button (click)="promeniLozinku()">
+      Potvrdi novu lozinku
+    </button>
+  </div>
+
+  <hr>
+
+  <div *ngIf="user.tip === 'sportista'">
+    <h3>Moje Rezervacije</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; margin-bottom: 20px;">
+      <thead>
+        <tr>
+          <th>
+            Naziv objekta 
+            <span (click)="sortData('naziv_objekta', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('naziv_objekta', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Grad 
+            <span (click)="sortData('grad', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('grad', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Teren/Hala 
+            <span (click)="sortData('teren_hala', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('teren_hala', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Sport 
+            <span (click)="sortData('sport', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('sport', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Datum 
+            <span (click)="sortData('datum', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('datum', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Od 
+            <span (click)="sortData('interval_od', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('interval_od', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Do 
+            <span (click)="sortData('interval_do', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('interval_do', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>
+            Status 
+            <span (click)="sortData('status', 1)" style="cursor: pointer; padding: 0 5px;">↑</span>
+            <span (click)="sortData('status', -1)" style="cursor: pointer; padding: 0 5px;">↓</span>
+          </th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of rezervacije">
+          <td>{{ r.naziv_objekta }}</td>
+          <td>{{ r.grad }}</td>
+          <td>{{ r.teren_hala }}</td>
+          <td>{{ r.sport }}</td>
+          <td>{{ r.datum }}</td>
+          <td>{{ r.interval_od }}</td>
+          <td>{{ r.interval_do }}</td>
+          <td>{{ r.status }}</td>
+          <td>
+            <button *ngIf="r.mozeOtkazati" (click)="otkazi(r._id)" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Otkazi</button>
+          </td>
+        </tr>
+        <tr *ngIf="rezervacije.length === 0">
+          <td colspan="9" style="text-align: center;">Nema prethodnih ili aktuelnih rezervacija.</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+
+  <div *ngIf="user.tip === 'sportista'">
+    <h3>Moji Treninzi</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; margin-bottom: 20px;">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Vreme</th>
+          <th>Trener</th>
+          <th>Sport</th>
+          <th>Objekat</th>
+          <th>Status</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of treninzi">
+          <td>{{ t.datum }}</td>
+          <td>{{ t.od }} - {{ t.do }}</td>
+          <td>{{ t.ime_trenera }}</td>
+          <td>{{ t.specijalizacija }}</td>
+          <td>{{ t.naziv_objekta }}</td>
+          <td>{{ t.status }}</td>
+          <td>
+            <button *ngIf="t.mozeOtkazati" disabled style="padding: 5px 10px; background: #ccc; border: none; border-radius: 4px; cursor: not-allowed;">Otkazi</button>
+            <span *ngIf="!t.mozeOtkazati">Nema akcije</span>
+          </td>
+        </tr>
+        <tr *ngIf="treninzi.length === 0">
+          <td colspan="7" style="text-align: center;">Nemate odrzanih ni zakazanih treninga.</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+
+  <div *ngIf="user.tip === 'sportista'">
+    <h3>Istorija kupovine (Oprema)</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; margin-bottom: 20px;">
+      <thead>
+        <tr>
+          <th>Objekat</th>
+          <th>Kupljeni proizvodi</th>
+          <th>Ukupan iznos</th>
+          <th>Status</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of narudzbine">
+          <td>{{ n.naziv_objekta }}</td>
+          <td>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li *ngFor="let p of n.proizvodi">{{ p.naziv }} ({{ p.kolicina }} kom)</li>
+            </ul>
+          </td>
+          <td><strong>{{ n.racun }} RSD</strong></td>
+          <td>{{ n.status }}</td>
+          <td>
+            <button *ngIf="n.status === 'naruceno'" (click)="otkaziOpremu(n._id)" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Otkazi</button>
+            <span *ngIf="n.status !== 'naruceno'">Nema akcije</span>
+          </td>
+        </tr>
+        <tr *ngIf="narudzbine.length === 0">
+          <td colspan="5" style="text-align: center;">Nemate nijednu narudzbinu.</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+
+  <div *ngIf="user.tip === 'radnik' || user.tip === 'zaposleni'">
+    <h3>Objekti pod mojom upravom</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; margin-bottom: 20px;">
+      <thead>
+        <tr style="background-color: #f0f0f0;">
+          <th>Naziv objekta</th>
+          <th>Grad</th>
+          <th>Vrste sportova</th>
+          <th>Elementi (Tereni / Hale)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let obj of mojiObjekti">
+          <td><strong>{{ obj.naziv }}</strong></td>
+          <td>{{ obj.mesto || obj.grad }}</td>
+          <td>{{ obj.vrsta_sporta ? obj.vrsta_sporta.join(', ') : '' }}</td>
+          <td>
+            <ul style="margin: 0; padding-left: 20px;" *ngIf="obj.tereni && obj.tereni.length > 0">
+              <li *ngFor="let t of obj.tereni">
+                {{ t.naziv }} ({{ t.tip_terena }}, kapacitet: {{ t.kapacitet }})
+              </li>
+            </ul>
+            <span *ngIf="!obj.tereni || obj.tereni.length === 0" style="color: gray;">Nema dodatih elemenata</span>
+          </td>
+        </tr>
+        <tr *ngIf="mojiObjekti.length === 0">
+          <td colspan="4" style="text-align: center;">Trenutno ne upravljate nijednim objektom.</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    
+    <!-- NOVO: Dodavanje Objekta -->
+    <button (click)="prikaziDodajObjekat = !prikaziDodajObjekat">Dodaj novi objekat</button>
+    <div *ngIf="prikaziDodajObjekat" style="border: 1px solid #ccc; padding: 15px; margin-top: 10px;">
+      <h4>Novi Objekat</h4>
+      <div *ngIf="porukaObjekat" style="color: blue;">{{ porukaObjekat }}</div>
+      <div>
+        <label>Naziv:</label><br>
+        <input type="text" [(ngModel)]="noviObjekat.naziv">
+      </div>
+      <div>
+        <label>Grad (mesto):</label><br>
+        <input type="text" [(ngModel)]="noviObjekat.mesto">
+      </div>
+      <div>
+        <label>Adresa:</label><br>
+        <input type="text" [(ngModel)]="noviObjekat.adresa">
+      </div>
+      <div>
+        <label>Vrste sportova:</label><br>
+        <div *ngFor="let s of sportoviList">
+          <label>
+            <input type="checkbox" (change)="toggleSportNoviObjekat(s.vrsta)" [checked]="noviObjekat.vrsta_sporta.includes(s.vrsta)">
+            {{ s.vrsta }}
+          </label>
+        </div>
+      </div>
+      <div>
+        <label>Radno vreme OD (HH:mm):</label><br>
+        <input type="text" [(ngModel)]="noviObjekat.radno_vreme_od" placeholder="08:00">
+      </div>
+      <div>
+        <label>Radno vreme DO (HH:mm):</label><br>
+        <input type="text" [(ngModel)]="noviObjekat.radno_vreme_do" placeholder="23:00">
+      </div>
+      <div>
+        <label>Dozvoljena kaznena nepojavljivanja:</label><br>
+        <input type="number" [(ngModel)]="noviObjekat.dozvoljena_kaznena_nepojavljivanja">
+      </div>
+      <br>
+      <button (click)="dodajObjekat()">Sacuvaj Objekat</button>
+      <hr>
+      <h5>Ili dodajte objekte preko JSON fajla:</h5>
+      <input type="file" accept=".json" (change)="onJsonFileSelected($event)">
+      <button (click)="dodajIzJsona()" [disabled]="!jsonFajlSadrzaj">Ucitaj i dodaj iz JSON-a</button>
+    </div>
+
+    <hr>
+    <!-- NOVO: Dodavanje Terena -->
+    <button (click)="prikaziDodajTeren = !prikaziDodajTeren">Dodaj teren/halu u postojeci objekat</button>
+    <div *ngIf="prikaziDodajTeren" style="border: 1px solid #ccc; padding: 15px; margin-top: 10px;">
+      <h4>Novi Teren/Hala/Dvorana</h4>
+      <div *ngIf="porukaTeren" style="color: blue;">{{ porukaTeren }}</div>
+      <div>
+        <label>Izaberite objekat:</label><br>
+        <select [(ngModel)]="noviTeren.idObjekta">
+          <option *ngFor="let obj of mojiObjekti" [value]="obj._id">{{ obj.naziv }}</option>
+        </select>
+      </div>
+      <div>
+        <label>Naziv terena:</label><br>
+        <input type="text" [(ngModel)]="noviTeren.naziv">
+      </div>
+      <div>
+        <label>Tip terena:</label><br>
+        <select [(ngModel)]="noviTeren.tip_terena">
+          <option value="otvoren">Otvoren teren</option>
+          <option value="hala">Hala (zatvoreno)</option>
+          <option value="timska_dvorana">Dvorana za timske sportove</option>
+        </select>
+      </div>
+      <div>
+        <label>Kapacitet:</label><br>
+        <input type="number" [(ngModel)]="noviTeren.kapacitet">
+      </div>
+      <div>
+        <label>Cena rezervacije po satu:</label><br>
+        <input type="number" [(ngModel)]="noviTeren.cena">
+      </div>
+      <div>
+        <label>Opis opreme (max 300 karaktera):</label><br>
+        <textarea [(ngModel)]="noviTeren.opis_opreme" maxlength="300" rows="3" style="width: 100%;"></textarea>
+      </div>
+      <br>
+      <button (click)="dodajNoviTeren()">Sacuvaj Teren</button>
+    </div>
+  </div>
+
+</div>

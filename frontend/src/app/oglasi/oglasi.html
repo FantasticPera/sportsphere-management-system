@@ -1,0 +1,94 @@
+<div style="max-width: 900px; margin: 40px auto; font-family: Arial, sans-serif;">
+
+  <h2>Oglasi - Pronalazenje saigraca</h2>
+  <hr>
+
+  <h3>Oglasi drugih sportista</h3>
+  <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; margin-bottom: 30px;">
+    <thead>
+      <tr style="background-color: #f5f5f5;">
+        <th>Sport</th>
+        <th>Grad</th>
+        <th>Objekat (Teren)</th>
+        <th>Datum i Termin</th>
+        <th>Nedostaje igraca</th>
+        <th>Akcija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let o of tudjiOglasi">
+        <td>{{ o.sport }}</td>
+        <td>{{ o.grad }}</td>
+        <td>{{ o.objekat_naziv }} <span *ngIf="o.teren_naziv">({{ o.teren_naziv }})</span></td>
+        <td>{{ o.datum }} <br> {{ o.termin }}</td>
+        <td style="text-align: center; font-weight: bold;">{{ o.broj_nedostajucih_igraca }}</td>
+        <td>
+          <ng-container *ngIf="mojiZahtevi.includes(o._id)">
+            <span style="color: green; font-weight: bold;">Zahtev poslat</span>
+          </ng-container>
+          <ng-container *ngIf="!mojiZahtevi.includes(o._id)">
+            <input type="number" [(ngModel)]="brojLjudiInput[o._id]" min="1" [max]="o.broj_nedostajucih_igraca" style="width: 50px; margin-right: 5px;">
+            <button type="button" (click)="posaljiZahtev(o._id)">Posalji zahtev</button>
+          </ng-container>
+        </td>
+      </tr>
+      <tr *ngIf="tudjiOglasi.length === 0">
+        <td colspan="6" style="text-align: center;">Trenutno nema aktivnih oglasa drugih korisnika.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Moji aktivni oglasi</h3>
+  <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; margin-bottom: 40px;">
+    <thead>
+      <tr style="background-color: #f5f5f5;">
+        <th>Sport</th>
+        <th>Grad</th>
+        <th>Objekat (Teren)</th>
+        <th>Datum i Termin</th>
+        <th>Nedostaje igraca</th>
+        <th>Akcija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let o of mojiOglasi">
+        <td>{{ o.sport }}</td>
+        <td>{{ o.grad }}</td>
+        <td>{{ o.objekat_naziv }} <span *ngIf="o.teren_naziv">({{ o.teren_naziv }})</span></td>
+        <td>{{ o.datum }} <br> {{ o.termin }}</td>
+        <td style="text-align: center; font-weight: bold;">{{ o.broj_nedostajucih_igraca }}</td>
+        <td>
+          <button type="button" [routerLink]="['/zahtevi', o._id]">Proveri zahteve</button>
+          <button type="button" (click)="zatvoriOglas(o._id)" style="margin-left: 10px;">Zatvori oglas</button>
+        </td>
+      </tr>
+      <tr *ngIf="mojiOglasi.length === 0">
+        <td colspan="6" style="text-align: center;">Nemate aktivnih oglasa.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h3>Kreiraj novi oglas</h3>
+  <div style="border: 1px solid #ccc; padding: 20px; border-radius: 5px; max-width: 500px;">
+    <div style="margin-bottom: 15px;">
+      <label>Odaberite vasu predstojecu rezervaciju:</label><br>
+      <select [(ngModel)]="idRez" style="width: 100%; padding: 5px; margin-top: 5px;">
+        <option value="">-- Izaberite termin --</option>
+        <option *ngFor="let r of dostupneRezervacije" [value]="r._id">
+          {{ r.datum }} {{ r.termin }} - {{ r.objekat_naziv }} <span *ngIf="r.teren_naziv">({{ r.teren_naziv }})</span>
+        </option>
+      </select>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label>Broj igraca koji nedostaje:</label><br>
+      <input type="number" [(ngModel)]="brojIgraca" min="1" style="width: 100px; padding: 5px; margin-top: 5px;">
+    </div>
+
+    <button type="button" (click)="kreirajOglas()" style="padding: 8px 15px;">Objavi oglas</button>
+
+    <p *ngIf="poruka" style="margin-top: 15px; color: blue; font-weight: bold;">{{ poruka }}</p>
+  </div>
+</div>

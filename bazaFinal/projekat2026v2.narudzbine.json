@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4ec0001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "proizvodi": [
+    {
+      "idOpreme": {
+        "$oid": "60d5ec49f1b2c8a1b4e80001"
+      },
+      "kolicina": 2
+    }
+  ],
+  "racun": 9000,
+  "status": "otkazano"
+},
+{
+  "_id": {
+    "$oid": "6a65bf1e2a34b24844cca11f"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "proizvodi": [
+    {
+      "idOpreme": {
+        "$oid": "60d5ec49f1b2c8a1b4e80001"
+      },
+      "kolicina": 1,
+      "_id": {
+        "$oid": "6a65bf1e2a34b24844cca120"
+      }
+    }
+  ],
+  "racun": 4500,
+  "status": "preuzeto",
+  "__v": 0
+}]

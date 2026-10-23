@@ -1,0 +1,38 @@
+=========================================
+DODATNE BIBLIOTEKE KORIŠĆENE U PROJEKTU
+=========================================
+
+Pored osnovnog okruženja (koje je već podešeno u laboratoriji), za ovaj projekat su korišćene sledeće dodatne biblioteke koje je potrebno instalirati ukoliko pravite projekat od nule:
+
+1. Dodatne biblioteke za BACKEND (Node.js):
+-----------------------------------------
+Pozicionirajte se u direktorijum "backend_Node" i pokrenite komande za instalaciju:
+
+- Multer (za upload fajlova, slika):
+  npm install multer
+  npm install @types/multer --save-dev
+
+- Cors (za dozvolu pristupa sa frontenda):
+  npm install cors
+  npm install @types/cors --save-dev
+
+- Mongoose (za rad sa MongoDB bazom):
+  npm install mongoose
+  npm install mongodb
+
+
+2. Dodatne biblioteke za FRONTEND (Angular):
+-----------------------------------------
+Pozicionirajte se u direktorijum "frontend" i pokrenite komande za instalaciju:
+
+- jsPDF i jsPDF-AutoTable (za generisanje i preuzimanje PDF izveštaja):
+  npm install jspdf
+  npm install jspdf-autotable
+
+
+=========================================
+POKRETANJE PROJEKTA
+=========================================
+Nakon instalacije svih potrebnih biblioteka:
+- U "backend_Node" pokrenite: npm start
+- U "frontend" pokrenite: npm start

@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e40001"
+  },
+  "vrsta": "Fudbal"
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e40002"
+  },
+  "vrsta": "Košarka"
+},
+{
+  "_id": {
+    "$oid": "6a65dd5fc80b3f7b21825a05"
+  },
+  "vrsta": "Kuglanje",
+  "__v": 0
+}]

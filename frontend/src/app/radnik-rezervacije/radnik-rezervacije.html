@@ -1,0 +1,55 @@
+<div>
+
+  <h2>Upravljanje rezervacijama i treninzima</h2>
+
+  <div style="margin-bottom: 20px;">
+    <label>Prikazi kalendar za objekat:</label><br>
+    <select [(ngModel)]="izabraniObjekat" style="width: 300px; padding: 5px;">
+      <option [ngValue]="null">-- Izaberi objekat --</option>
+      <option *ngFor="let o of mojiObjekti" [ngValue]="o">{{ o.naziv }} ({{ o.mesto }})</option>
+    </select>
+  </div>
+
+  <!-- Ucitavanje postojeceg kalendara kada se izabere objekat -->
+  <div *ngIf="izabraniObjekat" style="margin-bottom: 40px;">
+    <app-kalendar [objekat]="izabraniObjekat"></app-kalendar>
+  </div>
+
+  <hr>
+  <h3>Sve rezervacije</h3>
+
+  <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; margin-bottom: 20px;">
+    <thead>
+      <tr style="background-color: #f0f0f0;">
+        <th>Tip</th>
+        <th>Objekat</th>
+        <th>Korisnik</th>
+        <th>Datum</th>
+        <th>Vreme</th>
+        <th>Status</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let z of zapisi">
+        <td>{{ z.tip === 'rezervacija' ? 'Rezervacija' : 'Trening' }}</td>
+        <td>{{ z.objekat }}</td>
+        <td>{{ z.korisnik }}</td>
+        <td>{{ z.datum }}</td>
+        <td>{{ z.interval_od }} - {{ z.interval_do }}</td>
+        <td>{{ z.status }}</td>
+        <td>
+          <div *ngIf="mozePotvrditi(z)">
+            <button style="background-color: #28a745; color: white; padding: 5px; margin-right: 5px;" (click)="potvrdi(z)">Potvrdi</button>
+            <button style="background-color: #dc3545; color: white; padding: 5px;" (click)="odjavi(z)">Odjavi</button>
+          </div>
+          <span *ngIf="!mozePotvrditi(z) && (z.status !== 'odrzano' && z.status !== 'nije_dosao' && z.status !== 'otkazano')">Nije vreme (jos uvek rano)</span>
+          <span *ngIf="z.status === 'odrzano' || z.status === 'nije_dosao' || z.status === 'otkazano'">Zavrseno/Otkazano</span>
+        </td>
+      </tr>
+      <tr *ngIf="zapisi.length === 0">
+        <td colspan="7" style="text-align: center;">Trenutno nemate rezervacija.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

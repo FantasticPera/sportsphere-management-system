@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e80001"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "naziv": "Lopta za fudbal Adidas",
+  "cena": 4500,
+  "zalihe": 16,
+  "slika": "lopta.png",
+  "vrsta_sporta": "Fudbal"
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e80002"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20002"
+  },
+  "naziv": "Teniski reket Wilson",
+  "cena": 12000,
+  "zalihe": 5,
+  "slika": "reket.png",
+  "vrsta_sporta": "Tenis"
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e80003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20002"
+  },
+  "naziv": "Loptice za tenis Head (3 kom)",
+  "cena": 1500,
+  "zalihe": 20,
+  "slika": "tenis_loptice.png",
+  "vrsta_sporta": "Tenis"
+}]

@@ -1,0 +1,16 @@
+<h3>Nova lozinka</h3>
+@if (token) {
+  Nova lozinka: 
+  <input type="password" [(ngModel)]="newPassword">
+  <br/>
+  Potvrdi novu lozinku: 
+  <input type="password" [(ngModel)]="confirmPassword">
+  <br/>
+  <button (click)="resetPassword()">Promeni lozinku</button>
+  <br/>
+  <p style="font-weight: bold; color: green;" *ngIf="successMessage">{{successMessage}}</p>
+  <p style="color: red;" *ngIf="message">{{message}}</p>
+  <a href="javascript:void(0)" (click)="goBack()">Nazad na prijavu</a>
+} @else {
+  <p>Neispravan link. Token nedostaje.</p>
+}

@@ -1,0 +1,99 @@
+PIA PROJEKAT - SPORTSPHERE HUB (AŽURIRANA BAZA)
+
+KORISNIK
+- _id: Jedinstveni identifikator (ObjectId).
+- kor_ime: Jedinstveno korisničko ime.
+- lozinka: Šifrovana lozinka.
+- ime i prezime: Osnovni podaci.
+- telefon: Kontakt telefon.
+- profilna: Putanja do slike (fajl ili avatar).
+- omiljeni_sportovi: Array stringova (najviše 5 odabranih sportova).
+- mejl: Jedinstvena i-mejl adresa.
+- tip: String (sportista, radnik, admin).
+- maticni_broj: String od tačno 8 cifara (popunjava se samo za radnika, ostalima ostaje prazno).
+- status: String (odobren, na cekanju, odbijen).
+- kazne: Array objekata oblika { idObj, broj_nedolazaka } za evidentiranje kazni po konkretnom sportskom objektu.
+
+OBJEKAT
+- _id: Jedinstveni identifikator objekta.
+- naziv: Naziv sportskog objekta.
+- adresa: Adresa sedišta.
+- mesto: Grad u kom se nalazi.
+- lat i lng: Geografske koordinate (neophodne za mapu).
+- pib: String od tačno 9 cifara koji ne sme počinjati nulom.
+- radnici: Array referenci (ObjectId) na zaposlene (maksimalno 2 po objektu).
+- broj_radnika: Pomoćno brojčano polje.
+- lajkovi i dislajkovi: Array referenci (ObjectId) na korisnike koji su reagovali.
+- komentari: Array objekata oblika { idKor, tekst }.
+- promocije: Array objekata oblika { naziv, period_vazenja_od, period_vazenja_do, procenat, fiksni_popust, vrsta_sporta }.
+- status: String (aktivan, neaktivan), kojim upravlja isključivo administrator.
+- radno_vreme_od i radno_vreme_do: Vremenski stringovi (npr. "08:00").
+- vrsta_sporta: Array stringova.
+- opis: Opšti tekstualni opis.
+- max_kazni_korisnika: Broj dozvoljenih nepojavljivanja pre blokade u tom objektu.
+- tereni: Array objekata oblika { _id, naziv, tip_terena, kapacitet, dostupni_tereni, cena, opis_opreme, galerija_slika } (opis opreme je maksimalno 300 karaktera).
+
+GRAD
+- _id: Referenca za grad.
+- naziv: Ime grada (npr. "Beograd").
+
+SPORT
+- _id: Referenca za sport.
+- vrsta: Naziv sporta (npr. "Fudbal").
+
+REZERVACIJA
+- _id: Jedinstveni identifikator rezervacije.
+- idKor: Referenca na sportistu koji vrši rezervaciju.
+- idObj: Referenca na sportski objekat.
+- idTeren: Referenca na konkretan teren iz niza 'tereni'.
+- datum: Datum u formatu "YYYY-MM-DD" radi prikaza na kalendaru.
+- od i do: Vremenski okviri (npr. "18:00", "19:00").
+- status: String (podneta, aktuelna, zavrsena, otkazana).
+
+OGLAS
+- _id: Identifikator oglasa.
+- idKor: Referenca na sportistu koji traži saigrače (autor).
+- idRez: Referenca na rezervaciju termina za koji se traže igrači.
+- broj_nedostajucih_igraca: Numerička vrednost.
+- status: String (aktivan, zavrsen).
+
+ZAHTEV (za pridruživanje oglasu)
+- _id: Identifikator zahteva.
+- idOglas: Referenca na oglas iznad.
+- idKor: Referenca na sportistu koji se prijavljuje.
+- broj_ljudi: Sa koliko igrača sportista dolazi.
+- status: String (na cekanju, prihvacen, odbijen).
+
+TRENER
+- _id: Identifikator trenera.
+- idObj: Referenca na objekat gde trener drži treninge.
+- ime: Ime trenera.
+- specijalizacija: Vrsta sporta koju podučava.
+- prosecna_ocena: Presek ocena sportista.
+- cena: Naknada po satu.
+
+TRENING (Zakazani trening)
+- _id: Identifikator treninga.
+- idTrener: Koji trener ga drži.
+- idKor: Koji sportista trenira.
+- idObj: Referenca na sportski objekat (za lakši prikaz radnicima).
+- datum: Format "YYYY-MM-DD".
+- od i do: Vreme početka i kraja.
+- status: String (na cekanju, prihvacen, zavrsen).
+
+OPREMA
+- _id: Identifikator opreme.
+- idObj: Referenca na sportski objekat koji prodaje opremu u svom katalogu.
+- naziv: Ime artikla.
+- cena: Cena proizvoda.
+- zalihe: Stanje lagera.
+- slika: Putanja do slike.
+- vrsta_sporta: Kategorizacija proizvoda.
+
+NARUDZBINA
+- _id: Identifikator korpe/narudžbine.
+- idKor: Koji sportista je naručio robu.
+- idObj: U kom objektu je naručena roba.
+- proizvodi: Array objekata oblika { idOpreme, kolicina }.
+- racun: Ukupan iznos narudžbine.
+- status: String (naruceno, preuzeto, otkazano).

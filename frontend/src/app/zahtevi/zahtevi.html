@@ -1,0 +1,44 @@
+<div style="max-width: 800px; margin: 40px auto; font-family: Arial, sans-serif;">
+  <div style="text-align: right; margin-bottom: 20px;">
+    <a routerLink="/oglasi">Nazad na Oglase</a>
+  </div>
+
+  <h2>Zahtevi za odabrani oglas</h2>
+  <hr>
+
+  <p *ngIf="poruka" style="color: blue; font-weight: bold;">{{ poruka }}</p>
+
+  <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr style="background-color: #f5f5f5;">
+        <th>Sportista</th>
+        <th>Broj prijavljenih ljudi</th>
+        <th>Status zahteva</th>
+        <th>Akcija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let z of zahtevi">
+        <td>{{ z.ime_prezime }}</td>
+        <td style="text-align: center; font-weight: bold;">{{ z.broj_ljudi }}</td>
+        <td style="text-align: center;">
+          <span [ngStyle]="{'color': z.status === 'prihvacen' ? 'green' : (z.status === 'odbijen' ? 'red' : 'orange')}">
+            {{ z.status }}
+          </span>
+        </td>
+        <td>
+          <ng-container *ngIf="z.status === 'na cekanju'">
+            <button type="button" (click)="obradi(z._id, 'prihvati')" style="color: green; margin-right: 10px;">Prihvati</button>
+            <button type="button" (click)="obradi(z._id, 'odbij')" style="color: red;">Odbij</button>
+          </ng-container>
+          <ng-container *ngIf="z.status !== 'na cekanju'">
+            <em>Obradjen</em>
+          </ng-container>
+        </td>
+      </tr>
+      <tr *ngIf="zahtevi.length === 0">
+        <td colspan="4" style="text-align: center;">Trenutno nema zahteva za ovaj oglas.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

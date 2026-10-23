@@ -1,0 +1,16 @@
+<h3>Zaboravljena lozinka</h3>
+Unesite korisnicko ime ili i-mejl adresu: 
+<input type="text" [(ngModel)]="identifier">
+<br/>
+<button (click)="generateLink()">Posalji link</button>
+<br/>
+<p>{{message}}</p>
+@if (token) {
+  <p>Vas link za resetovanje lozinke:</p>
+  <input type="text" readonly [value]="'http://localhost:4200/changepassform?token=' + token" style="width: 400px;">
+  <br/>
+  <br/>
+  <a [routerLink]="['/changepassform']" [queryParams]="{token: token}">
+    Ili kliknite ovde da direktno otvorite formu
+  </a>
+}

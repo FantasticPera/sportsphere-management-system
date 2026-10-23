@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4ea0001"
+  },
+  "idOglas": {
+    "$oid": "60d5ec49f1b2c8a1b4e90001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10004"
+  },
+  "broj_ljudi": 1,
+  "status": "prihvacen"
+},
+{
+  "_id": {
+    "$oid": "6a65ae1b1696bbf180674edd"
+  },
+  "idOglas": {
+    "$oid": "6a65a99d51122efdfdc43f9c"
+  },
+  "idKor": {
+    "$oid": "6a65aa3851122efdfdc43fbf"
+  },
+  "broj_ljudi": 1,
+  "status": "prihvacen",
+  "__v": 0
+}]

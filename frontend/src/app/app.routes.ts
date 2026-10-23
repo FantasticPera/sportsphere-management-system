@@ -1,0 +1,36 @@
+import { Routes } from '@angular/router';
+import { LoginComponent } from './login-component/login-component';
+import { LoginadminComponent } from './loginadmin-component/loginadmin-component';
+import { ChangepassComponent } from './changepass-component/changepass-component';
+import { ChangepassformComponent } from './changepassform-component/changepassform-component';
+import { RegisterComponent } from './register-component/register-component';
+import { PocetnaComponent } from './pocetna-component/pocetna-component';
+import { DetaljiObjektaComponent } from './detalji-objekta/detalji-objekta';
+import { ProfilComponent } from './profil-component/profil-component';
+import { OglasiComponent } from './oglasi/oglasi';
+import { ZahteviComponent } from './zahtevi/zahtevi';
+import { ZakaziTreningComponent } from './zakazi-trening/zakazi-trening';
+import { KorpaComponent } from './korpa/korpa';
+import { RadnikRezervacijeComponent } from './radnik-rezervacije/radnik-rezervacije';
+import { OpremaPromocijeComponent } from './oprema-promocije/oprema-promocije';
+import { RadnikNarudzbineComponent } from './radnik-narudzbine/radnik-narudzbine';
+import { RadnikIzvestajiComponent } from './radnik-izvestaji/radnik-izvestaji';
+
+export const routes: Routes = [
+  { path: '', component: PocetnaComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'logina', component: LoginadminComponent },
+  { path: 'changepass', component: ChangepassComponent },
+  { path: 'changepassform', component: ChangepassformComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'objekat/:id', component: DetaljiObjektaComponent },
+  { path: 'profil', component: ProfilComponent },
+  { path: 'oglasi', component: OglasiComponent },
+  { path: 'zahtevi/:id', component: ZahteviComponent },
+  { path: 'zakazi-trening/:id', component: ZakaziTreningComponent },
+  { path: 'korpa', component: KorpaComponent },
+  { path: 'radnik-rezervacije', component: RadnikRezervacijeComponent },
+  { path: 'upravljanje-katalogom', component: OpremaPromocijeComponent },
+  { path: 'radnik-narudzbine', component: RadnikNarudzbineComponent },
+  { path: 'radnik-izvestaji', component: RadnikIzvestajiComponent }
+];

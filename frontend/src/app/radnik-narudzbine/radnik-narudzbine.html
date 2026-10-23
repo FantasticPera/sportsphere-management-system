@@ -1,0 +1,71 @@
+<div>
+
+  <h2>Upravljanje narudzbinama</h2>
+
+  <div style="margin-bottom: 20px;">
+    <label>Izaberite objekat (prodavnicu):</label><br>
+    <select [(ngModel)]="izabraniObjekat" (change)="onObjekatChange()" style="width: 300px; padding: 5px;">
+      <option [ngValue]="null">-- Izaberi objekat --</option>
+      <option *ngFor="let o of mojiObjekti" [ngValue]="o">{{ o.naziv }} ({{ o.mesto }})</option>
+    </select>
+  </div>
+
+  <div *ngIf="izabraniObjekat">
+    <h3>Spisak narudzbina</h3>
+    
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left;">
+      <thead>
+        <tr style="background-color: #f0f0f0;">
+          <th>Kupac</th>
+          <th>Iznos (RSD)</th>
+          <th>Status</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of narudzbine">
+          <td>
+            <ng-container *ngIf="n.kupacInfo">
+              {{ n.kupacInfo.ime }} {{ n.kupacInfo.prezime }}<br>
+              <small>{{ n.kupacInfo.email }}</small>
+            </ng-container>
+            <span *ngIf="!n.kupacInfo">Nepoznat ({{ n.idKor }})</span>
+          </td>
+          <td>{{ n.racun }}</td>
+          <td>
+            <span [ngStyle]="{
+              'color': n.status === 'naruceno' ? 'orange' : (n.status === 'prihvaceno' ? 'blue' : (n.status === 'preuzeto' ? 'green' : 'red'))
+            }">
+              {{ n.status }}
+            </span>
+          </td>
+          <td>
+            <!-- Akcije iz "naruceno" -->
+            <ng-container *ngIf="n.status === 'naruceno'">
+              <button style="background-color: #007bff; color: white; padding: 5px; margin-right: 5px;" 
+                      (click)="promeniStatus(n, 'prihvaceno')">Prihvati</button>
+              <button style="background-color: #dc3545; color: white; padding: 5px;" 
+                      (click)="promeniStatus(n, 'otkazano')">Otkazi</button>
+            </ng-container>
+            
+            <!-- Akcije iz "prihvaceno" -->
+            <ng-container *ngIf="n.status === 'prihvaceno'">
+              <button style="background-color: #28a745; color: white; padding: 5px; margin-right: 5px;" 
+                      (click)="promeniStatus(n, 'preuzeto')">Oznaci kao preuzeto</button>
+              <button style="background-color: #dc3545; color: white; padding: 5px;" 
+                      (click)="promeniStatus(n, 'otkazano')">Otkazi</button>
+            </ng-container>
+
+            <!-- Ako je zavrseno -->
+            <span *ngIf="n.status === 'preuzeto' || n.status === 'otkazano'">
+              Nema dostupnih akcija
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="narudzbine.length === 0">
+          <td colspan="4" style="text-align: center;">Nema evidentiranih narudzbina za ovaj objekat.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

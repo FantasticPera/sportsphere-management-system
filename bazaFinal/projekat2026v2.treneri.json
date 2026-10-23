@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e70001"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "ime": "Dejan Stanković",
+  "specijalizacija": "Fudbal",
+  "prosecna_ocena": 4.8,
+  "cena": 2000
+}]

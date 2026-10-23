@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e60001"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "idTeren": {
+    "$oid": "60d5ec49f1b2c8a1b4e50001"
+  },
+  "datum": "2026-07-28",
+  "od": "18:00",
+  "do": "19:00",
+  "status": "aktuelna"
+},
+{
+  "_id": {
+    "$oid": "6a65a4acb237ea56c38526d3"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "idTeren": {
+    "$oid": "60d5ec49f1b2c8a1b4e50001"
+  },
+  "datum": "2026-07-26",
+  "od": "18:00",
+  "do": "19:00",
+  "status": "podneta",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a65cc6f26f66f1a4faef31c"
+  },
+  "idKor": {
+    "$oid": "60d5ec49f1b2c8a1b4e10003"
+  },
+  "idObj": {
+    "$oid": "64bf1d2c9f1a2b3c4d5e6f01"
+  },
+  "idTeren": {
+    "$oid": "64bf1d2c9f1a2b3c4d5e6a11"
+  },
+  "datum": "2026-07-27",
+  "od": "18:00",
+  "do": "19:00",
+  "status": "podneta",
+  "__v": 0
+}]

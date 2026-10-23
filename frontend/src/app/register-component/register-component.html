@@ -1,0 +1,87 @@
+<h3>Registracija</h3>
+<table>
+  <tr>
+    <td>Ime:</td>
+    <td><input type="text" [(ngModel)]="ime"></td>
+  </tr>
+  <tr>
+    <td>Prezime:</td>
+    <td><input type="text" [(ngModel)]="prezime"></td>
+  </tr>
+  <tr>
+    <td>Kontakt telefon:</td>
+    <td><input type="text" [(ngModel)]="telefon"></td>
+  </tr>
+  <tr>
+    <td>I-mejl adresa:</td>
+    <td><input type="email" [(ngModel)]="mejl"></td>
+  </tr>
+  <tr>
+    <td>Korisnicko ime:</td>
+    <td><input type="text" [(ngModel)]="kor_ime"></td>
+  </tr>
+  <tr>
+    <td>Lozinka:</td>
+    <td><input type="password" [(ngModel)]="lozinka"></td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">Profilna slika:</td>
+    <td>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*">
+      <br/>
+      <button type="button" (click)="generisiAvatar()">Generisi avatar (DiceBear)</button>
+      <div *ngIf="avatarPreviewUrl" style="margin-top: 10px;">
+        <img [src]="avatarPreviewUrl" width="100" height="100" style="border: 1px solid #ccc; display: block; margin-bottom: 5px;">
+        <button type="button" *ngIf="generatedBlob && !isFileConfirmed" (click)="sacuvajAvatar()">Sacuvaj kao profilnu sliku</button>
+        <span *ngIf="isFileConfirmed" style="color: green; font-size: 12px;"> Avatar sacuvan!</span>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Tip korisnika:</td>
+    <td>
+      <select [(ngModel)]="tip">
+        <option value="sportista">Sportista</option>
+        <option value="radnik">Zaposleni (Radnik)</option>
+      </select>
+    </td>
+  </tr>
+  <ng-container *ngIf="tip === 'radnik'">
+    <tr>
+      <td>Naziv sportskog objekta:</td>
+      <td><input type="text" [(ngModel)]="nazivObjekta"></td>
+    </tr>
+    <tr>
+      <td>Adresa sedista:</td>
+      <td><input type="text" [(ngModel)]="adresaObjekta"></td>
+    </tr>
+    <tr>
+      <td>Maticni broj (8 cifara):</td>
+      <td><input type="text" [(ngModel)]="maticniBroj"></td>
+    </tr>
+    <tr>
+      <td>PIB (9 cifara, bez vodece nule):</td>
+      <td><input type="text" [(ngModel)]="pib"></td>
+    </tr>
+  </ng-container>
+  <tr>
+    <td style="vertical-align: top;">Sportovi (max 5):</td>
+    <td>
+      <select multiple [(ngModel)]="selectedVrste" (change)="onSportChange()">
+        <option *ngFor="let s of sportoviList" [value]="s.vrsta">{{s.vrsta}}</option>
+      </select>
+      <br/>
+      <small>Drzite Ctrl za odabir vise sportova</small>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="register()">Registruj se</button>
+    </td>
+  </tr>
+</table>
+
+<p style="font-weight: bold; color: green;" *ngIf="successMessage">{{successMessage}}</p>
+<p class="error" style="color: red; font-weight: bold;" *ngIf="message">{{message}}</p>
+<br/>
+<a routerLink="/login">Nazad na prijavu</a>

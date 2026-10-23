@@ -1,0 +1,22 @@
+<div style="max-width: 900px; margin: 10px auto; font-family: Arial, sans-serif; text-align: right; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">
+  <a routerLink="/">Pocetna</a> | 
+  <ng-container *ngIf="!loggedUser">
+    <a routerLink="/login">Prijava (korisnik)</a> | 
+    <a routerLink="/register">Registracija</a>
+  </ng-container>
+  <ng-container *ngIf="loggedUser">
+    <span>Zdravo, {{ loggedUser.ime }}!</span> | 
+    <ng-container *ngIf="loggedUser.tip !== 'admin'">
+      <a routerLink="/profil">Profil</a> | 
+    </ng-container>
+    <a routerLink="/oglasi" *ngIf="loggedUser.tip === 'sportista'">Oglasi</a>
+    <span *ngIf="loggedUser.tip === 'sportista'"> | </span>
+    <ng-container *ngIf="loggedUser.tip === 'radnik' || loggedUser.tip === 'zaposleni'">
+      <a routerLink="/upravljanje-katalogom">Oprema i Promocije</a> |
+      <a routerLink="/radnik-rezervacije">Upravljanje rezervacijama</a> |
+      <a routerLink="/radnik-narudzbine">Upravljanje narudzbinama</a> |
+      <a routerLink="/radnik-izvestaji">Izvestaji</a> |
+    </ng-container>
+    <a href="javascript:void(0)" (click)="logout()">Odjava</a>
+  </ng-container>
+</div>

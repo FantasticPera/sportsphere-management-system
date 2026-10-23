@@ -1,0 +1,224 @@
+[{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e20001"
+  },
+  "naziv": "Sportski Centar Olimp",
+  "adresa": "Vjekoslava Kovača 11",
+  "mesto": "Beograd",
+  "lat": 44.7961,
+  "lng": 20.5146,
+  "pib": "123456789",
+  "radnici": [
+    {
+      "$oid": "60d5ec49f1b2c8a1b4e10002"
+    }
+  ],
+  "broj_radnika": 1,
+  "lajkovi": [
+    {
+      "$oid": "60d5ec49f1b2c8a1b4e10003"
+    }
+  ],
+  "dislajkovi": [],
+  "komentari": [
+    {
+      "idKor": {
+        "$oid": "60d5ec49f1b2c8a1b4e10003"
+      },
+      "tekst": "Odličan teren za fudbal!"
+    }
+  ],
+  "promocije": [],
+  "status": "aktivan",
+  "radno_vreme_od": "08:00",
+  "radno_vreme_do": "21:00",
+  "vrsta_sporta": [
+    "Fudbal",
+    "Košarka"
+  ],
+  "opis": "Moderan sportski kompleks sa različitim terenima.",
+  "max_kazni_korisnika": 3,
+  "tereni": [
+    {
+      "_id": {
+        "$oid": "60d5ec49f1b2c8a1b4e50001"
+      },
+      "naziv": "Fudbal Otvoreno 1",
+      "tip_terena": "otvoren",
+      "kapacitet": 12,
+      "dostupni_tereni": 2,
+      "cena": 3000,
+      "opis_opreme": "Veštačka trava, uključeni markirci",
+      "galerija_slika": [
+        "teren1.jpg"
+      ]
+    },
+    {
+      "naziv": "Za kosarku 1",
+      "tip_terena": "hala",
+      "kapacitet": 20,
+      "dostupni_tereni": 1,
+      "cena": 1400,
+      "opis_opreme": "super je teren parket",
+      "galerija_slika": [],
+      "_id": {
+        "$oid": "6a65c6d26deeed71b483aff5"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "60d5ec49f1b2c8a1b4e20002"
+  },
+  "naziv": "Teniski Klub Tašmajdan",
+  "adresa": "Ilije Garašanina 26",
+  "mesto": "Beograd",
+  "lat": 44.8093,
+  "lng": 20.4729,
+  "pib": "987654321",
+  "radnici": [],
+  "broj_radnika": 0,
+  "lajkovi": [],
+  "dislajkovi": [],
+  "komentari": [],
+  "promocije": [
+    {
+      "naziv": "Letnji popust na šljaci",
+      "period_vazenja_od": "2024-01-01",
+      "period_vazenja_do": "2027-12-31",
+      "procenat": 15,
+      "fiksni_popust": 0,
+      "vrsta_sporta": "Tenis"
+    },
+    {
+      "naziv": "Zimska akcija (završena)",
+      "period_vazenja_od": "2020-01-01",
+      "period_vazenja_do": "2021-12-31",
+      "procenat": 0,
+      "fiksni_popust": 500,
+      "vrsta_sporta": "Tenis"
+    }
+  ],
+  "status": "aktivan",
+  "radno_vreme_od": "07:00",
+  "radno_vreme_do": "21:00",
+  "vrsta_sporta": [
+    "Tenis"
+  ],
+  "opis": "Odlični teniski tereni u strogom centru grada.",
+  "max_kazni_korisnika": 2,
+  "tereni": [
+    {
+      "_id": {
+        "$oid": "60d5ec49f1b2c8a1b4e50002"
+      },
+      "naziv": "Teren 1 - Šljaka",
+      "tip_terena": "otvoren",
+      "kapacitet": 4,
+      "dostupni_tereni": 1,
+      "cena": 1500,
+      "opis_opreme": "Vrhunska šljaka, obezbeđene loptice uz doplatu",
+      "galerija_slika": [
+        "tenis1.jpg",
+        "tenis2.jpg"
+      ]
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64bf1d2c9f1a2b3c4d5e6f01"
+  },
+  "naziv": "Sportski centar Tašmajdan",
+  "adresa": "Ilije Garašanina 26",
+  "mesto": "Beograd",
+  "lat": 44.8091,
+  "lng": 20.4715,
+  "pib": "100234567",
+  "radnici": [
+    {
+      "$oid": "64c12d3a9f1a2b3c4d5e6f99"
+    },
+    {
+      "$oid": "60d5ec49f1b2c8a1b4e10002"
+    }
+  ],
+  "broj_radnika": 2,
+  "lajkovi": [
+    {
+      "$oid": "64d23e4b9f1a2b3c4d5e6f88"
+    },
+    {
+      "$oid": "64d23e4b9f1a2b3c4d5e6f89"
+    }
+  ],
+  "dislajkovi": [],
+  "komentari": [
+    {
+      "idKor": {
+        "$oid": "64d23e4b9f1a2b3c4d5e6f88"
+      },
+      "tekst": "Odličan zatvoreni bazen, voda je uvek čista!",
+      "_id": {
+        "$oid": "6a65c86e7f11705103ab33a2"
+      }
+    }
+  ],
+  "promocije": [
+    {
+      "naziv": "Letnji studentski popust",
+      "period_vazenja_od": "2026-07-01",
+      "period_vazenja_do": "2026-08-31",
+      "procenat": 25,
+      "fiksni_popust": null,
+      "vrsta_sporta": "Plivanje",
+      "_id": {
+        "$oid": "6a65c86e7f11705103ab33a3"
+      }
+    }
+  ],
+  "status": "aktivan",
+  "radno_vreme_od": "07:00",
+  "radno_vreme_do": "23:00",
+  "vrsta_sporta": [
+    "Plivanje",
+    "Košarka",
+    "Fudbal"
+  ],
+  "opis": "Moderan sportski centar sa otvorenim i zatvorenim bazenima, kao i višenamenskim terenima.",
+  "max_kazni_korisnika": 3,
+  "tereni": [
+    {
+      "naziv": "Zatvoreni olimpijski bazen",
+      "tip_terena": "zatvoren",
+      "kapacitet": 50,
+      "dostupni_tereni": 1,
+      "cena": 500,
+      "opis_opreme": "Dostupne daske za plivanje i kape na infopultu.",
+      "galerija_slika": [
+        "tasmajdan_bazen1.jpg",
+        "tasmajdan_bazen2.jpg"
+      ],
+      "_id": {
+        "$oid": "64bf1d2c9f1a2b3c4d5e6a11"
+      }
+    },
+    {
+      "naziv": "Košarkaški teren A",
+      "tip_terena": "otvoren",
+      "kapacitet": 10,
+      "dostupni_tereni": 2,
+      "cena": 2500,
+      "opis_opreme": "Tartan podloga, table od pleksiglasa, mogućnost iznajmljivanja lopti.",
+      "galerija_slika": [
+        "kosarka_tas.jpg"
+      ],
+      "_id": {
+        "$oid": "64bf1d2c9f1a2b3c4d5e6a22"
+      }
+    }
+  ],
+  "__v": 0
+}]

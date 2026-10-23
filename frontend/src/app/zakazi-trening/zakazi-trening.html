@@ -1,0 +1,41 @@
+<div style="max-width: 600px; margin: 40px auto; font-family: Arial, sans-serif;">
+
+  <h2>Zakazi trening</h2>
+  <hr>
+
+  <div *ngIf="trener" style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+    <strong>Trener:</strong> {{ trener.ime }} <br>
+    <strong>Sport:</strong> {{ trener.specijalizacija }} <br>
+    <strong>Objekat:</strong> {{ trener.naziv_objekta }} <br>
+    <strong>Cena po satu:</strong> {{ trener.cena }} RSD
+  </div>
+
+  <table border="0" cellpadding="5" style="width: 100%;">
+    <tr>
+      <td style="width: 30%;">Datum:</td>
+      <td>
+        <input type="date" [(ngModel)]="datum" [min]="minDatum" style="width: 100%; padding: 5px;">
+      </td>
+    </tr>
+    <tr>
+      <td>Od (Vreme):</td>
+      <td>
+        <input type="text" [(ngModel)]="od" placeholder="HH:mm" style="width: 100%; padding: 5px;">
+      </td>
+    </tr>
+    <tr>
+      <td>Do (Vreme):</td>
+      <td>
+        <input type="text" [(ngModel)]="doVreme" placeholder="HH:mm" style="width: 100%; padding: 5px;">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: right; padding-top: 15px;">
+        <button type="button" (click)="zakazi()" style="padding: 10px 20px;">Potvrdi rezervaciju</button>
+      </td>
+    </tr>
+  </table>
+
+  <p *ngIf="poruka" style="margin-top: 20px; font-weight: bold; color: blue;">{{ poruka }}</p>
+
+</div>

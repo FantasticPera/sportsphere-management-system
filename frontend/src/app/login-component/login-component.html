@@ -1,0 +1,10 @@
+Username: <input type="text" [(ngModel)]="username"> <br />
+Password: <input type="password" [(ngModel)]="password"> <br />
+<!-- Administrator? <input type="checkbox" [(ngModel)]="admin" /> -->
+<button (click)="login()">Login</button>
+<a routerLink="/changepass">Zaboravljena lozinka?</a>
+<br />
+<br />
+<a routerLink="/register">Nemas nalog? Registruj se!</a>
+<br />
+<p class="error">{{error}}</p>
